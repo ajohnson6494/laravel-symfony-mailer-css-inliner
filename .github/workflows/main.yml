@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Setup PHP
-        uses: shivammathur/setup-php@v1
+        uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
           extensions: dom, libxml, mbstring, intl, xml, fileinfo, zip
@@ -32,11 +32,6 @@ jobs:
         run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
       - name: Test with phpunit
         run: vendor/bin/phpunit --coverage-text
-      - name: Sensiolabs Security checker
-        working-directory: ${{env.working-directory}}
-        run: |
-          wget https://get.sensiolabs.org/security-checker.phar
-          php security-checker.phar security:check
   composer-normalize:
     runs-on: ubuntu-latest
     steps:
