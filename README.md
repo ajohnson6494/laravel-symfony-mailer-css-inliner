@@ -3,8 +3,6 @@ Laravel Symphony Mailer CSS Inliner
 
 ![](https://github.com/ajohnson6494/laravel-symfony-mailer-css-inliner/workflows/CI/badge.svg)
 [![Latest Stable Version](https://poser.pugx.org/ajohnson6494/laravel-symfony-mailer-css-inliner/v/stable.png)](https://packagist.org/packages/ajohnson6494/laravel-symfony-mailer-css-inliner)
-[![Latest Unstable Version](https://poser.pugx.org/ajohnson6494/laravel-symfony-mailer-css-inliner/v/unstable.png)](https://packagist.org/packages/ajohnson6494/laravel-symfony-mailer-css-inliner)
-[![php](http://poser.pugx.org/ajohnson6494/laravel-symfony-mailer-css-inliner/require/php)](https://packagist.org/packages/ajohnson6494/laravel-symfony-mailer-css-inliner)
 [![License](https://poser.pugx.org/ajohnson6494/laravel-symfony-mailer-css-inliner/license.png)](https://packagist.org/packages/ajohnson6494/laravel-symfony-mailer-css-inliner)
 
 ## Why?
