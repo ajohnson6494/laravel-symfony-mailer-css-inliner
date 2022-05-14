@@ -1,4 +1,4 @@
-Laravel Symphony Mailer CSS Inliner
+Laravel Symfony Mailer CSS Inliner
 ===================================
 
 ![](https://github.com/ajohnson6494/laravel-symfony-mailer-css-inliner/workflows/CI/badge.svg)
