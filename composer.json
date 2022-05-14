@@ -5,7 +5,7 @@
         "laravel",
         "mailer",
         "css",
-        "symfony/mailer"
+        "symfony-mailer"
     ],
     "license": "MIT",
     "authors": [
