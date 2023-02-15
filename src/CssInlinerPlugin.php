@@ -3,14 +3,15 @@
 namespace ajohnson6494\LaravelSymfonyMailerCssInliner;
 
 use DOMDocument;
-use Symfony\Component\Mime\Message;
-use Symfony\Component\Mime\Part\TextPart;
 use Illuminate\Mail\Events\MessageSending;
-use Symfony\Component\Mime\Part\AbstractPart;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Mailer\Event\MessageEvent;
-use Symfony\Component\Mime\Part\Multipart\MixedPart;
-use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
+use Symfony\Component\Mime\Part\AbstractPart;
+use Symfony\Component\Mime\Part\AbstractMultipartPart;
 use Symfony\Component\Mime\Part\Multipart\AlternativePart;
+use Symfony\Component\Mime\Part\Multipart\MixedPart;
+use Symfony\Component\Mime\Part\TextPart;
+use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 
 class CssInlinerPlugin
 {
@@ -29,28 +30,37 @@ class CssInlinerPlugin
     {
         $message = $event->message;
 
-        if (!$message instanceof Message) {
+        if (!$message instanceof Email) {
             return;
         }
 
-        $this->handleSymfonyMessage($message);
+        $this->handleSymfonyEmail($message);
     }
 
     public function handleSymfonyEvent(MessageEvent $event): void
     {
         $message = $event->getMessage();
 
-        if (!$message instanceof Message) {
+        if (!$message instanceof Email) {
             return;
         }
 
-        $this->handleSymfonyMessage($message);
+        $this->handleSymfonyEmail($message);
     }
 
     private function processPart(AbstractPart $part): AbstractPart
     {
         if ($part instanceof TextPart && $part->getMediaType() === 'text' && $part->getMediaSubtype() === 'html') {
             return $this->processHtmlTextPart($part);
+        } else if ($part instanceof AbstractMultipartPart) {
+            $part_class = get_class($part);
+            $parts = [];
+
+            foreach ($part->getParts() as $childPart) {
+                $parts[] = $this->processPart($childPart);
+            }
+
+            return new $part_class(...$parts);
         }
 
         return $part;
@@ -76,7 +86,7 @@ class CssInlinerPlugin
         return new TextPart($bodyString, $part->getPreparedHeaders()->getHeaderParameter('Content-Type', 'charset') ?: 'utf-8', 'html');
     }
 
-    private function handleSymfonyMessage(Message $message): void
+    private function handleSymfonyEmail(Email $message): void
     {
         $body = $message->getBody();
 
@@ -87,26 +97,13 @@ class CssInlinerPlugin
         if ($body instanceof TextPart) {
             $message->setBody($this->processPart($body));
         } elseif ($body instanceof AlternativePart || $body instanceof MixedPart) {
-          $originalParts = $body->getParts();
-          $allParts = [];
-
-          foreach($originalParts as $part) {
-            if ($part->getMediaType() === "multipart") {
-              /** @var \Symfony\Component\Mime\Part\Multipart $part */
-              foreach ($part->getParts() as $p) {
-                $allParts[] = $p;
-              }
-            } else {
-              $allParts[] = $part;
-            }
-          }
-
-          $message->setBody(new AlternativePart(
-            ...array_map(
-                fn (AbstractPart $part) => $this->processPart($part),
-                $allParts
-            )
-          ));
+            $part_type = get_class($body);
+            $message->setBody(new $part_type(
+                ...array_map(
+                    fn (AbstractPart $part) => $this->processPart($part),
+                    $body->getParts()
+                )
+            ));
         }
     }
 

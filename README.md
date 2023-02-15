@@ -9,7 +9,7 @@ Laravel Symfony Mailer CSS Inliner
 Most email clients won't render CSS (on a `<link>` or a `<style>`). The solution is inline your CSS directly on the HTML. Doing this by hand easily turns into unmantainable templates.
 The goal of this package is to automate the process of inlining that CSS before sending the emails.
 
-## Instalation and compatability
+## Installation and compatability
 
 Requires PHP 8.1 and Laravel 9.0 or higher.
 
