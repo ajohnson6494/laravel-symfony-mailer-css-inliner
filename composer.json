@@ -15,16 +15,16 @@
         }
     ],
     "require": {
-        "php": "^8.0.2 || ^8.1 || ^8.2",
+        "php": "^8.2 || ^8.3",
         "ext-dom": "*",
         "ext-libxml": "*",
-        "illuminate/mail": "^9.0 || ^10 || ^11",
-        "illuminate/support": "^9.0 || ^10 || ^11",
+        "illuminate/mail": "^11",
+        "illuminate/support": "^11",
         "tijsverkoyen/css-to-inline-styles": "~2.2"
     },
     "require-dev": {
         "enlightn/security-checker": "^2.0",
-        "phpunit/phpunit": "^9.0 || ^10 || ^11",
+        "phpunit/phpunit": "^11",
         "symfony/mailer": "^7.0"
     },
     "config": {
