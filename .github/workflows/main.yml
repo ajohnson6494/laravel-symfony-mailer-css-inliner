@@ -16,12 +16,7 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           extensions: dom, libxml, mbstring, intl, xml, fileinfo, zip
           coverage: xdebug
-      - name: Cache composer dependencies
-        uses: actions/cache@v4
-        with:
-          path: $(composer config cache-files-dir)
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
-          restore-keys: ${{ runner.os }}-composer-
+          tools: composer, phpunit
       - name: Install Composer dependencies
         run: composer install --no-ansi --no-interaction --no-progress --optimize-autoloader
       - name: Setup Problem Matchers for PHPUnit
