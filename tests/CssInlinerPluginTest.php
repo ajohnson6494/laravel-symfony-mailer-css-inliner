@@ -342,7 +342,7 @@ class CssInlinerPluginTest extends TestCase
         return $processedMessage;
     }
 
-    private function createMessageToSend(Email $message, string $attachmentPath = null): Email
+    private function createMessageToSend(Email $message, ?string $attachmentPath = null): Email
     {
         $message = $message->to('test2@example.com')
                     ->from('test@example.com')
