@@ -24,7 +24,7 @@ jobs:
       - name: Test with phpunit
         run: vendor/bin/phpunit --coverage-text
       - name: Check for vulnerabilities
-        run: composer security-checker
+        run: composer audit
   composer-normalize:
     runs-on: ubuntu-latest
     steps:
